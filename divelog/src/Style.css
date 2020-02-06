@@ -1,0 +1,14 @@
+body {
+    background-image: url(./img/feeding_sharks.jpg);
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    font-size: 40px;
+}
+
+.loginForm{
+    text-align: center;
+    
+}
