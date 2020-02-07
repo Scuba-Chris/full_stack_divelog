@@ -13,32 +13,32 @@ class LoginForm extends React.Component{
             username : '',
             password : '',
         }
-        this.changeHandler = this.changeHandler.bind(this);
+        // this.changeHandler = this.changeHandler.bind(this);
         this.obtainToken = this.obtainToken.bind(this);
     }
 
-    // changeHandler = event => {
-    //     this.setState({
-    //         [event.target.name] : event.target.value
-    //     })
-    // }
-
-    changeHandler(event){
+    changeHandler = event => {
         this.setState({
             [event.target.name] : event.target.value
         })
     }
+
+    // changeHandler(event){
+    //     this.setState({
+    //         [event.target.name] : event.target.value
+    //     })
+    // }
 
     async obtainToken(event){
         event.preventDefault();
 
         try{
             console.log('attempting a token')
+            console.log(url + 'token/')
             const response = await axios.post( url + 'token/' , {
                 username: this.state.username, 
                 password: this.state.password,
             });
-            console.log(response.data)
             this.props.onSuccess(response.data);
         } catch (error) { console.error('well then...', error )}
     }
@@ -48,7 +48,9 @@ class LoginForm extends React.Component{
             <>
                 <form onSubmit={this.obtainToken} className='loginForm'>
                     <input name='username' type='text' value={this.state.username} placeholder='username' onChange={this.changeHandler} />
+                    <br />
                     <input name='password' type='password' value={this.state.password} placeholder='password' onChange={this.changeHandler} />
+                    <br />
                     <button>submit</button>
                 </form>
             </>

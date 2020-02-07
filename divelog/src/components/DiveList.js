@@ -17,7 +17,7 @@ export default props => (
 const DiveItem = props => (
     <li>
         <Link to={`/${props.dive.id}`}>
-            <p>{props.dive.siteName}</p>
+            <p>{props.dive.title}</p>
         </Link>
     </li>
 )

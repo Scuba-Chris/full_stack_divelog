@@ -11,7 +11,7 @@ import DiveList from './components/DiveList'
 import DiveDetails from './components/DiveDetails'
 
 
-const url = 'http://64.225.121.236:8000/api/v1/divelog';
+const url = 'http://64.225.121.236:8000/api/v1/divelog/';
 
 class App extends React.Component {
 
@@ -41,7 +41,7 @@ class App extends React.Component {
           Authorization: `Bearer ${this.state.accessToken}`
         }
       }
-      const respnose = await axios.post(url, headers);
+      const respnose = await axios.get(url, headers);
       this.setState({ dives: respnose.data })
     } catch ( error ){
       console.error('well then....')
@@ -50,21 +50,23 @@ class App extends React.Component {
 
   async createHandler(data){
     const headers = {
-      headers : {
+      headers: {
         Authorization: `Bearer ${this.state.accessToken}`
       }
     }
-    const respnose = await axios.post( url, data, headers);
-    this.setState({ dives: this.state.dives.concat(respnose.data)})
+    console.log('url', url)
+    console.log('data', data)
+    const response = await axios.post( url, data, headers);
+    this.setState({ dives: this.state.dives.concat(response.data)})
   }
 
   async updateHandler(data){
     const headers = {
-      headers : {
+      headers: {
         Authorization: `Bearer ${this.state.accessToken}`
       }
     }
-    const path = `${url}v1/${data.id}`;
+    const path = `${url}v1/${data.id}/`;
     const respnose = await axios.put( path, data, headers );
 
     console.log(respnose.data)
@@ -85,7 +87,7 @@ class App extends React.Component {
     const headers = {
       headers : { Authorization: `Bearer ${this.state.accessToken}`}
     }
-    const path = `${url}v1/${id}`;
+    const path = `${url}${id}/`;
     const respnose = await axios.delete(path, headers);
 
     console.log(respnose.data)
@@ -119,7 +121,7 @@ class App extends React.Component {
               <LoginForm onSuccess={this.loginHandler} /> }
             </Route>
 
-            <Route path='/:id' render={this.renderDiveDetails} />
+            <Route path='/:id/' render={this.renderDiveDetails} />
           </Switch>
         </div>
       </Router>
