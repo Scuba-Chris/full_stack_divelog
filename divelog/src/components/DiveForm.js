@@ -58,7 +58,7 @@ class DiveForm extends React.Component {
                         />
                         </p>
                         <br />
-                        <button>Add dive</button>
+                        <button>Add dive/update</button>
                     </fieldset>
                 </form>
             </>

@@ -27,7 +27,7 @@ class App extends React.Component {
     this.createHandler = this.createHandler.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
-    this.renderDiveDetails = this.renderDiveDetails.bind(this);
+    // this.renderDiveDetails = this.renderDiveDetails.bind(this);
   }
 
   async loginHandler({access, refresh}){
@@ -41,8 +41,8 @@ class App extends React.Component {
           Authorization: `Bearer ${this.state.accessToken}`
         }
       }
-      const respnose = await axios.get(url, headers);
-      this.setState({ dives: respnose.data })
+      const response = await axios.get(url, headers);
+      this.setState({ dives: response.data })
     } catch ( error ){
       console.error('well then....')
     }
@@ -66,10 +66,11 @@ class App extends React.Component {
         Authorization: `Bearer ${this.state.accessToken}`
       }
     }
-    const path = `${url}v1/${data.id}/`;
-    const respnose = await axios.put( path, data, headers );
 
-    console.log(respnose.data)
+    const path = `${url}${data.id}/`;
+    const response = await axios.put( path, data, headers );
+
+    console.log(response)
 
 
     this.setState({
@@ -88,18 +89,17 @@ class App extends React.Component {
       headers : { Authorization: `Bearer ${this.state.accessToken}`}
     }
     const path = `${url}${id}/`;
-    const respnose = await axios.delete(path, headers);
-
-    console.log(respnose.data)
-
+    const response = await axios.delete(path, headers);
+    console.log(response)
+    
     this.setState({ dives : this.state.dives.filter(dive => dive.id !== id)})
   }
 
-  renderDiveDetails(props){
+  renderDiveDetails = (props) => {
     if(!this.state.accessToken){
       return <Redirect to='/' />
     }
-    const diveId= parseInt(props.match.params.id);
+    const diveId = parseInt(props.match.params.id);
     const dive = this.state.dives && this.state.dives.find(dive => dive.id === diveId);
 
     if(dive){
